@@ -117,6 +117,7 @@ const Users = React.memo(function Users({size=16, color='currentColor', style}) 
   const html = "<svg width=\"{size}\" height=\"{size}\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"{color}\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/></svg>".replace(/{size}/g, size).replace(/{color}/g, color);
   return React.createElement('span', {dangerouslySetInnerHTML:{__html:html}, style:{display:'inline-flex',alignItems:'center',lineHeight:0,flexShrink:0,...(style||{})}});
 });
+ function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }
 const MobileCtx = createContext(false);
 const useMobile = () => useContext(MobileCtx);
 
@@ -1218,43 +1219,43 @@ function KeyHub() {
   const mobile = windowWidth < 600;
 
   return (
-    React.createElement(MobileCtx.Provider, { value: mobile, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1103}}
-    , React.createElement('div', { ref: appRef, style: { ...styles.app, flexDirection: mobile ? 'column' : 'row' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1104}}
-      , React.createElement('style', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1105}}, globalCss)
+    React.createElement(MobileCtx.Provider, { value: mobile,}
+    , React.createElement('div', { ref: appRef, style: { ...styles.app, flexDirection: mobile ? 'column' : 'row' },}
+      , React.createElement('style', null, globalCss)
 
       /* Desktop sidebar */
       , !mobile && (
-        React.createElement('div', { style: styles.sidebar, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1109}}
-          , React.createElement('div', { style: styles.logo, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1110}}, React.createElement(Package, { size: 20, color: "#ff6b4a", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1110}} ), React.createElement('span', { style: { fontWeight: 700, fontSize: 15 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1110}}, "KeyHub"))
-          , React.createElement('nav', { style: styles.nav, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1111}}
-            , React.createElement(NavItem, { icon: React.createElement(Plus, { size: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1112}} ), label: "Импорт игр" , active: view === 'intake' || view === 'review', onClick: () => { setView('intake'); }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1112}} )
-            , React.createElement(NavItem, { icon: React.createElement(Search, { size: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1113}} ), label: "База цен игр"  , active: view === 'db', onClick: () => setView('db'), badge: dbGames.length, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1113}} )
-            , React.createElement('div', { style: styles.navDivider, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1114}} )
-            , React.createElement(NavItem, { icon: React.createElement(Gift, { size: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1115}} ), label: "Гифты", active: view === 'giftIntake' || view === 'giftReview', onClick: () => setView('giftIntake'), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1115}} )
-            , React.createElement(NavItem, { icon: React.createElement(Users, { size: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1116}} ), label: "Поставщики", active: view === 'suppliers', onClick: () => setView('suppliers'), badge: suppliers.length || undefined, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1116}} )
+        React.createElement('div', { style: styles.sidebar,}
+          , React.createElement('div', { style: styles.logo,}, React.createElement(Package, { size: 20, color: "#ff6b4a",} ), React.createElement('span', { style: { fontWeight: 700, fontSize: 15 },}, "KeyHub"))
+          , React.createElement('nav', { style: styles.nav,}
+            , React.createElement(NavItem, { icon: React.createElement(Plus, { size: 16,} ), label: "Импорт игр" , active: view === 'intake' || view === 'review', onClick: () => { setView('intake'); },} )
+            , React.createElement(NavItem, { icon: React.createElement(Search, { size: 16,} ), label: "База цен игр"  , active: view === 'db', onClick: () => setView('db'), badge: dbGames.length,} )
+            , React.createElement('div', { style: styles.navDivider,} )
+            , React.createElement(NavItem, { icon: React.createElement(Gift, { size: 16,} ), label: "Гифты", active: view === 'giftIntake' || view === 'giftReview', onClick: () => setView('giftIntake'),} )
+            , React.createElement(NavItem, { icon: React.createElement(Users, { size: 16,} ), label: "Поставщики", active: view === 'suppliers', onClick: () => setView('suppliers'), badge: suppliers.length || undefined,} )
           )
         )
       )
 
       /* Mobile top bar */
       , mobile && (
-        React.createElement('div', { style: styles.mobileTopBar, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1123}}
-          , React.createElement(Package, { size: 18, color: "#ff6b4a", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1124}} )
-          , React.createElement('span', { style: { fontWeight: 700, fontSize: 16, color: '#fff' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1125}}, "KeyHub")
+        React.createElement('div', { style: styles.mobileTopBar,}
+          , React.createElement(Package, { size: 18, color: "#ff6b4a",} )
+          , React.createElement('span', { style: { fontWeight: 700, fontSize: 16, color: '#fff' },}, "KeyHub")
         )
       )
 
-      , React.createElement('div', { style: mobile ? styles.mainMobile : styles.main, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1129}}
+      , React.createElement('div', { style: mobile ? styles.mainMobile : styles.main,}
         , toast && (
-          React.createElement('div', { style: { ...styles.toast, borderColor: toast.type === 'error' ? '#ef4444' : toast.type === 'success' ? '#4ade80' : '#374151' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1131}}
-            , toast.type === 'success' && React.createElement(Check, { size: 14, color: "#4ade80", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1132}} )
-            , toast.type === 'error' && React.createElement(AlertCircle, { size: 14, color: "#ef4444", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1133}} )
-            , React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1134}}, toast.msg)
+          React.createElement('div', { style: { ...styles.toast, borderColor: toast.type === 'error' ? '#ef4444' : toast.type === 'success' ? '#4ade80' : '#374151' },}
+            , toast.type === 'success' && React.createElement(Check, { size: 14, color: "#4ade80",} )
+            , toast.type === 'error' && React.createElement(AlertCircle, { size: 14, color: "#ef4444",} )
+            , React.createElement('span', null, toast.msg)
           )
         )
 
         , view === 'intake' && (
-          React.createElement(IntakeView, { rawText: rawText, setRawText: setRawText, handleParse: handleParse, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1139}} )
+          React.createElement(IntakeView, { rawText: rawText, setRawText: setRawText, handleParse: handleParse,} )
         )
 
         , view === 'review' && parseResult && (
@@ -1271,7 +1272,7 @@ function KeyHub() {
             selectedSupplier: selectedSupplier,
             setSelectedSupplier: setSelectedSupplier,
             addSupplier: addSupplier,
-            removeSupplier: removeSupplier, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1143}}
+            removeSupplier: removeSupplier,}
           )
         )
 
@@ -1288,7 +1289,7 @@ function KeyHub() {
             showToast: showToast,
             exportDB: exportDB,
             importDB: importDB,
-            fetchGGForSelected: fetchGGForSelected, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1161}}
+            fetchGGForSelected: fetchGGForSelected,}
           )
         )
 
@@ -1296,7 +1297,7 @@ function KeyHub() {
           React.createElement(GiftIntakeView, {
             giftRawText: giftRawText, setGiftRawText: setGiftRawText, handleGiftParse: handleGiftParse,
             giftBrand: giftBrand, setGiftBrand: setGiftBrand, GIFT_BRANDS: GIFT_BRANDS,
-            giftCurrency: giftCurrency, setGiftCurrency: setGiftCurrency, GIFT_CURRENCIES: GIFT_CURRENCIES, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1178}}
+            giftCurrency: giftCurrency, setGiftCurrency: setGiftCurrency, GIFT_CURRENCIES: GIFT_CURRENCIES,}
           )
         )
 
@@ -1309,7 +1310,7 @@ function KeyHub() {
             cancelGiftReview: cancelGiftReview,
             giftGroupedText: giftGroupedText, copyGiftGroupedText: copyGiftGroupedText,
             giftImportPayout: giftImportPayout,
-            giftCostUSD: giftCostUSD, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1186}}
+            giftCostUSD: giftCostUSD,}
           )
         )
 
@@ -1317,41 +1318,41 @@ function KeyHub() {
           React.createElement(SuppliersView, {
             suppliers: suppliers,
             addSupplier: addSupplier,
-            removeSupplier: removeSupplier, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1199}}
+            removeSupplier: removeSupplier,}
           )
         )
       )
 
       /* Mobile bottom tab bar */
       , mobile && (
-        React.createElement('div', { style: styles.mobileTabBar, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1209}}
+        React.createElement('div', { style: styles.mobileTabBar,}
           , React.createElement('button', {
             onClick: () => setView('intake'),
-            style: { ...styles.mobileTab, ...(view === 'intake' || view === 'review' ? styles.mobileTabActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1210}}
+            style: { ...styles.mobileTab, ...(view === 'intake' || view === 'review' ? styles.mobileTabActive : {}) },}
 
-            , React.createElement(Plus, { size: 22, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1214}} )
-            , React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1215}}, "Импорт")
+            , React.createElement(Plus, { size: 22,} )
+            , React.createElement('span', null, "Импорт")
           )
           , React.createElement('button', {
             onClick: () => setView('db'),
-            style: { ...styles.mobileTab, ...(view === 'db' ? styles.mobileTabActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1217}}
+            style: { ...styles.mobileTab, ...(view === 'db' ? styles.mobileTabActive : {}) },}
 
-            , React.createElement(Search, { size: 22, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1221}} )
-            , React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1222}}, "База", dbGames.length > 0 ? ` (${dbGames.length})` : '')
+            , React.createElement(Search, { size: 22,} )
+            , React.createElement('span', null, "База", dbGames.length > 0 ? ` (${dbGames.length})` : '')
           )
           , React.createElement('button', {
             onClick: () => setView('giftIntake'),
-            style: { ...styles.mobileTab, ...(view === 'giftIntake' || view === 'giftReview' ? styles.mobileTabActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1224}}
+            style: { ...styles.mobileTab, ...(view === 'giftIntake' || view === 'giftReview' ? styles.mobileTabActive : {}) },}
 
-            , React.createElement(Gift, { size: 22, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1228}} )
-            , React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1229}}, "Гифты")
+            , React.createElement(Gift, { size: 22,} )
+            , React.createElement('span', null, "Гифты")
           )
           , React.createElement('button', {
             onClick: () => setView('suppliers'),
-            style: { ...styles.mobileTab, ...(view === 'suppliers' ? styles.mobileTabActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1231}}
+            style: { ...styles.mobileTab, ...(view === 'suppliers' ? styles.mobileTabActive : {}) },}
 
-            , React.createElement(Users, { size: 22, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1235}} )
-            , React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1236}}, "Поставщики")
+            , React.createElement(Users, { size: 22,} )
+            , React.createElement('span', null, "Поставщики")
           )
         )
       )
@@ -1370,35 +1371,35 @@ function SuppliersView({ suppliers, addSupplier, removeSupplier }) {
   }
 
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1255}}
-      , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1256}}, "База поставщиков" )
-      , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1257}}, suppliers.length, " поставщиков. Нік отображается в сгруппированном тексте при импорте."        )
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('h1', { style: styles.h1,}, "База поставщиков" )
+      , React.createElement('p', { style: styles.subtitle,}, suppliers.length, " поставщиков. Нік отображается в сгруппированном тексте при импорте."        )
 
-      , React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 20 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1259}}
+      , React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 20 },}
         , React.createElement('input', {
           value: newName,
           onChange: e => setNewName(e.target.value),
           onKeyDown: e => e.key === 'Enter' && handleAdd(),
           placeholder: "Никнейм нового поставщика…"  ,
           style: { ...styles.searchInput, flex: 1 },
-          autoFocus: true, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1260}}
+          autoFocus: true,}
         )
-        , React.createElement('button', { onClick: handleAdd, disabled: !newName.trim(), style: { ...styles.btnPrimary, opacity: newName.trim() ? 1 : 0.4 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1268}}
-          , React.createElement(Plus, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1269}} ), " Добавить"
+        , React.createElement('button', { onClick: handleAdd, disabled: !newName.trim(), style: { ...styles.btnPrimary, opacity: newName.trim() ? 1 : 0.4 },}
+          , React.createElement(Plus, { size: 14,} ), " Добавить"
         )
       )
 
       , suppliers.length === 0 && (
-        React.createElement('div', { style: styles.emptyState, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1274}}, "Нет поставщиков — добавь первого выше"     )
+        React.createElement('div', { style: styles.emptyState,}, "Нет поставщиков — добавь первого выше"     )
       )
 
-      , React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1277}}
+      , React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 6 },}
         , suppliers.map(s => (
-          React.createElement('div', { key: s, style: { ...styles.priceRow, display: 'flex', alignItems: 'center', gap: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1279}}
-            , React.createElement(Users, { size: 15, color: "#a78bfa", style: { flexShrink: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1280}} )
-            , React.createElement('span', { style: { flex: 1, fontWeight: 600, fontSize: 14 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1281}}, s)
-            , React.createElement('button', { onClick: () => removeSupplier(s), style: styles.iconBtnDanger, title: "Удалить поставщика" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1282}}
-              , React.createElement(Trash2, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1283}} )
+          React.createElement('div', { key: s, style: { ...styles.priceRow, display: 'flex', alignItems: 'center', gap: 10 },}
+            , React.createElement(Users, { size: 15, color: "#a78bfa", style: { flexShrink: 0 },} )
+            , React.createElement('span', { style: { flex: 1, fontWeight: 600, fontSize: 14 },}, s)
+            , React.createElement('button', { onClick: () => removeSupplier(s), style: styles.iconBtnDanger, title: "Удалить поставщика" ,}
+              , React.createElement(Trash2, { size: 14,} )
             )
           )
         ))
@@ -1409,9 +1410,9 @@ function SuppliersView({ suppliers, addSupplier, removeSupplier }) {
 
 function NavItem({ icon, label, active, onClick, badge }) {
   return (
-    React.createElement('button', { onClick: onClick, style: { ...styles.navItem, ...(active ? styles.navItemActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1294}}
-      , icon, React.createElement('span', { style: { flex: 1, textAlign: 'left' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1295}}, label)
-      , badge !== undefined && badge > 0 && React.createElement('span', { style: styles.navBadge, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1296}}, badge)
+    React.createElement('button', { onClick: onClick, style: { ...styles.navItem, ...(active ? styles.navItemActive : {}) },}
+      , icon, React.createElement('span', { style: { flex: 1, textAlign: 'left' },}, label)
+      , badge !== undefined && badge > 0 && React.createElement('span', { style: styles.navBadge,}, badge)
     )
   );
 }
@@ -1420,20 +1421,20 @@ function IntakeView({ rawText, setRawText, handleParse }) {
   const mobile = useMobile();
   const mobileStyle = mobile ? { fontSize: 16, lineHeight: 1.5 } : {};
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1305}}
-      , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1306}}, "Новая поставка" )
-      , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1307}}, "Вставь текст с играми и ключами — формат может быть любым, разберём автоматически."            )
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('h1', { style: styles.h1,}, "Новая поставка" )
+      , React.createElement('p', { style: styles.subtitle,}, "Вставь текст с играми и ключами — формат может быть любым, разберём автоматически."            )
 
-      , React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1309}}
-        , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1310}}, "Текст от поставщика"  )
+      , React.createElement('div', { style: styles.card,}
+        , React.createElement('label', { style: styles.label,}, "Текст от поставщика"  )
         , React.createElement('textarea', {
           value: rawText, onChange: e => setRawText(e.target.value),
           placeholder: `Вставь сюда что угодно, например:\n\nMK11 Ultimate|XXXXX-XXXXX-XXXXX|\nCore Keeper - YYYYY-YYYYY-YYYYY\n\nDoom II\nZZZZZ-ZZZZZ-ZZZZZ`,
-          style: styles.textarea, rows: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1311}}
+          style: styles.textarea, rows: 16,}
         )
-        , React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1316}}
-          , React.createElement('span', { style: { fontSize: 12, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1317}}, rawText.split('\n').filter(l => l.trim()).length, " строк" )
-          , React.createElement('button', { onClick: handleParse, disabled: !rawText.trim(), style: { ...styles.btnPrimary, opacity: rawText.trim() ? 1 : 0.4 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1318}}, "Разобрать " , React.createElement(ChevronRight, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1318}} ))
+        , React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 },}
+          , React.createElement('span', { style: { fontSize: 12, color: '#6b7280' },}, rawText.split('\n').filter(l => l.trim()).length, " строк" )
+          , React.createElement('button', { onClick: handleParse, disabled: !rawText.trim(), style: { ...styles.btnPrimary, opacity: rawText.trim() ? 1 : 0.4 },}, "Разобрать " , React.createElement(ChevronRight, { size: 15,} ))
         )
       )
     )
@@ -1464,46 +1465,46 @@ function ReviewView({ parseResult, updateNewGameField, updateMatchedField, confi
   }
 
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1349}}
-      , React.createElement('button', { onClick: cancelReview, style: styles.backBtn, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1350}}, React.createElement(ArrowLeft, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1350}} ), " Назад" )
-      , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1351}}, "Проверка перед сохранением"  )
-      , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1352}}, "Найдено "
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('button', { onClick: cancelReview, style: styles.backBtn,}, React.createElement(ArrowLeft, { size: 14,} ), " Назад" )
+      , React.createElement('h1', { style: styles.h1,}, "Проверка перед сохранением"  )
+      , React.createElement('p', { style: styles.subtitle,}, "Найдено "
          , matched.length + newGames.length, " игр, "  , totalKeys, " ключей"
-        , trash.length > 0 && React.createElement('span', { style: { color: '#fb923c' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1354}}, " · "  , trash.length, " строк не распознано"   )
+        , trash.length > 0 && React.createElement('span', { style: { color: '#fb923c' },}, " · "  , trash.length, " строк не распознано"   )
       )
 
       , matched.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1358}}
-          , React.createElement('h3', { style: styles.h3, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1359}}, React.createElement(Check, { size: 15, color: "#4ade80", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1359}} ), " Уже есть цена в базе ("      , matched.length, ")")
-          , React.createElement('div', { style: styles.tableWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1360}}
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: styles.h3,}, React.createElement(Check, { size: 15, color: "#4ade80",} ), " Уже есть цена в базе ("      , matched.length, ")")
+          , React.createElement('div', { style: styles.tableWrap,}
             , matched.map((g, idx) => {
               const existing = g._dbRef; // fallback: find from dbGames by existingId below
               return (
-              React.createElement('div', { key: idx, style: styles.matchedRow, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1364}}
-                , React.createElement('div', { style: { flex: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1365}}
-                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1366}}, g.existingName)
-                  , g.name.toLowerCase() !== g.existingName.toLowerCase() && React.createElement('div', { style: { fontSize: 11.5, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1367}}, "пришло как: \""  , g.name, "\"")
+              React.createElement('div', { key: idx, style: styles.matchedRow,}
+                , React.createElement('div', { style: { flex: 1 },}
+                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 },}, g.existingName)
+                  , g.name.toLowerCase() !== g.existingName.toLowerCase() && React.createElement('div', { style: { fontSize: 11.5, color: '#6b7280' },}, "пришло как: \""  , g.name, "\"")
                 )
                 , React.createElement('input', {
                   type: "number", step: "0.01",
                   value: g.costPrice,
                   onChange: e => updateMatchedField(idx, 'costPrice', e.target.value),
-                  style: { ...styles.inputSmall, width: 80 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1369}}
+                  style: { ...styles.inputSmall, width: 80 },}
                 )
-                , React.createElement('select', { value: g.currency, onChange: e => updateMatchedField(idx, 'currency', e.target.value), style: styles.selectSmall, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1375}}
-                  , CURRENCIES.map(c => React.createElement('option', { key: c, value: c, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1376}}, c))
-                )
-                , g.ggKeyshop ? (
-                  React.createElement('span', { style: { fontSize: 12, color: '#4ade80', minWidth: 90, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1379}}, g.ggKeyshop, " " , g.ggCurrency || 'USD')
-                ) : (
-                  React.createElement('span', { style: { fontSize: 12, color: '#4b5563', minWidth: 90, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1381}}, "gg.deals —" )
+                , React.createElement('select', { value: g.currency, onChange: e => updateMatchedField(idx, 'currency', e.target.value), style: styles.selectSmall,}
+                  , CURRENCIES.map(c => React.createElement('option', { key: c, value: c,}, c))
                 )
                 , g.ggKeyshop ? (
-                  React.createElement('span', { style: { fontSize: 12, color: '#a78bfa', minWidth: 80, textAlign: 'right', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1384}}, (Math.floor(parseFloat(g.ggKeyshop) * 0.7 * 10) / 10).toFixed(1), " " , g.ggCurrency || 'USD')
+                  React.createElement('span', { style: { fontSize: 12, color: '#4ade80', minWidth: 90, textAlign: 'right' },}, g.ggKeyshop, " " , g.ggCurrency || 'USD')
                 ) : (
-                  React.createElement('span', { style: { fontSize: 12, color: '#4b5563', minWidth: 80, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1386}}, "—")
+                  React.createElement('span', { style: { fontSize: 12, color: '#4b5563', minWidth: 90, textAlign: 'right' },}, "gg.deals —" )
                 )
-                , React.createElement('div', { style: styles.keyCountBadge, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1388}}, g.keys.length, " ключей" )
+                , g.ggKeyshop ? (
+                  React.createElement('span', { style: { fontSize: 12, color: '#a78bfa', minWidth: 80, textAlign: 'right', fontWeight: 600 },}, (Math.floor(parseFloat(g.ggKeyshop) * 0.7 * 10) / 10).toFixed(1), " " , g.ggCurrency || 'USD')
+                ) : (
+                  React.createElement('span', { style: { fontSize: 12, color: '#4b5563', minWidth: 80, textAlign: 'right' },}, "—")
+                )
+                , React.createElement('div', { style: styles.keyCountBadge,}, g.keys.length, " ключей" )
               )
               );
             })
@@ -1512,9 +1513,9 @@ function ReviewView({ parseResult, updateNewGameField, updateMatchedField, confi
       )
 
       , newGames.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1397}}
-          , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1398}}
-            , React.createElement('h3', { style: { ...styles.h3, margin: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1399}}, React.createElement(AlertCircle, { size: 15, color: "#fb923c", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1399}} ), " Новые игры — нужна цена закупки ("       , newGames.length, ")")
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 10 },}
+            , React.createElement('h3', { style: { ...styles.h3, margin: 0 },}, React.createElement(AlertCircle, { size: 15, color: "#fb923c",} ), " Новые игры — нужна цена закупки ("       , newGames.length, ")")
             , React.createElement('button', {
               onClick: () => {
                 setShowNewNames(true);
@@ -1523,40 +1524,40 @@ function ReviewView({ parseResult, updateNewGameField, updateMatchedField, confi
                 setTimeout(() => { if (newNamesRef.current) { newNamesRef.current.focus(); newNamesRef.current.select(); } }, 50);
               },
               style: styles.btnGhostIcon,
-              title: "Показать названия новых игр, чтобы прислать Клоду и получить цены gg.deals"          , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1400}}
+              title: "Показать названия новых игр, чтобы прислать Клоду и получить цены gg.deals"          ,}
 
-              , React.createElement(Copy, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1410}} ), " Цены на новые"
+              , React.createElement(Copy, { size: 13,} ), " Цены на новые"
             )
           )
           , showNewNames && (
-            React.createElement('div', { style: { marginBottom: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1414}}
-              , React.createElement('div', { style: { fontSize: 11, color: '#a78bfa', marginBottom: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1415}}, "Названия новых игр — выдели (Ctrl+A) и скопируй, пришли Клоду, потом вставь цены в Базе цен:"               )
+            React.createElement('div', { style: { marginBottom: 10 },}
+              , React.createElement('div', { style: { fontSize: 11, color: '#a78bfa', marginBottom: 6 },}, "Названия новых игр — выдели (Ctrl+A) и скопируй, пришли Клоду, потом вставь цены в Базе цен:"               )
               , React.createElement('textarea', {
                 ref: newNamesRef,
                 readOnly: true,
                 value: newGames.map(g => g.name).join('\n'),
                 onClick: e => e.target.select(),
                 style: { ...styles.textarea, fontSize: 12 },
-                rows: Math.min(10, Math.max(3, newGames.length)), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1416}}
+                rows: Math.min(10, Math.max(3, newGames.length)),}
               )
-              , React.createElement('button', { onClick: () => setShowNewNames(false), style: { ...styles.btnGhost, marginTop: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1424}}, "Скрыть")
+              , React.createElement('button', { onClick: () => setShowNewNames(false), style: { ...styles.btnGhost, marginTop: 8 },}, "Скрыть")
             )
           )
-          , React.createElement('div', { style: styles.tableWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1427}}
+          , React.createElement('div', { style: styles.tableWrap,}
             , newGames.map((g, idx) => (
-              React.createElement('div', { key: idx, style: styles.newGameRow, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1429}}
-                , React.createElement('div', { style: { flex: 1, minWidth: 160 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1430}}
-                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1431}}, g.name)
-                  , React.createElement('div', { style: { fontSize: 11.5, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1432}}, g.keys.length, " ключей" )
+              React.createElement('div', { key: idx, style: styles.newGameRow,}
+                , React.createElement('div', { style: { flex: 1, minWidth: 160 },}
+                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 },}, g.name)
+                  , React.createElement('div', { style: { fontSize: 11.5, color: '#6b7280' },}, g.keys.length, " ключей" )
                 )
                 , React.createElement('input', {
                   type: "number", step: "0.01", placeholder: "цена закупки" ,
                   value: g.costPrice,
                   onChange: e => updateNewGameField(idx, 'costPrice', e.target.value),
-                  style: { ...styles.inputSmall, width: 110, borderColor: g.costPrice === '' ? '#ef4444' : '#374151' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1434}}
+                  style: { ...styles.inputSmall, width: 110, borderColor: g.costPrice === '' ? '#ef4444' : '#374151' },}
                 )
-                , React.createElement('select', { value: g.currency, onChange: e => updateNewGameField(idx, 'currency', e.target.value), style: styles.selectSmall, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1440}}
-                  , CURRENCIES.map(c => React.createElement('option', { key: c, value: c, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1441}}, c))
+                , React.createElement('select', { value: g.currency, onChange: e => updateNewGameField(idx, 'currency', e.target.value), style: styles.selectSmall,}
+                  , CURRENCIES.map(c => React.createElement('option', { key: c, value: c,}, c))
                 )
               )
             ))
@@ -1565,54 +1566,54 @@ function ReviewView({ parseResult, updateNewGameField, updateMatchedField, confi
       )
 
       , trash.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1450}}
-          , React.createElement('h3', { style: { ...styles.h3, color: '#fb923c' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1451}}, React.createElement(X, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1451}} ), " Не распознано ("   , trash.length, ")")
-          , React.createElement('div', { style: styles.trashBox, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1452}}
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: { ...styles.h3, color: '#fb923c' },}, React.createElement(X, { size: 15,} ), " Не распознано ("   , trash.length, ")")
+          , React.createElement('div', { style: styles.trashBox,}
             , trash.slice(0, 30).map((t, i) => (
-              React.createElement('div', { key: i, style: styles.trashLine, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1454}}, React.createElement('span', { style: { color: '#9ca3af' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1454}}, t.raw), React.createElement('span', { style: { color: '#6b7280', fontSize: 11 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1454}}, " — "  , t.reason))
+              React.createElement('div', { key: i, style: styles.trashLine,}, React.createElement('span', { style: { color: '#9ca3af' },}, t.raw), React.createElement('span', { style: { color: '#6b7280', fontSize: 11 },}, " — "  , t.reason))
             ))
-            , trash.length > 30 && React.createElement('div', { style: { color: '#6b7280', fontSize: 12, marginTop: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1456}}, "и ещё "  , trash.length - 30, "…")
+            , trash.length > 30 && React.createElement('div', { style: { color: '#6b7280', fontSize: 12, marginTop: 6 },}, "и ещё "  , trash.length - 30, "…")
           )
         )
       )
 
       , importPayout && importPayout.lines.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1462}}
-          , React.createElement('h3', { style: styles.h3, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1463}}, "Сумма к оплате за эту поставку"     )
-          , React.createElement('div', { style: styles.summaryGrid, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1464}}
-            , React.createElement('div', { style: styles.summaryCard, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1465}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1465}}, "Позиций"), React.createElement('div', { style: styles.summaryValue, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1465}}, importPayout.lines.length))
-            , React.createElement('div', { style: styles.summaryCard, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1466}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1466}}, "Ключей"), React.createElement('div', { style: styles.summaryValue, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1466}}, importPayout.totalKeys))
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: styles.h3,}, "Сумма к оплате за эту поставку"     )
+          , React.createElement('div', { style: styles.summaryGrid,}
+            , React.createElement('div', { style: styles.summaryCard,}, React.createElement('div', { style: styles.summaryLabel,}, "Позиций"), React.createElement('div', { style: styles.summaryValue,}, importPayout.lines.length))
+            , React.createElement('div', { style: styles.summaryCard,}, React.createElement('div', { style: styles.summaryLabel,}, "Ключей"), React.createElement('div', { style: styles.summaryValue,}, importPayout.totalKeys))
             , Object.entries(importPayout.byCurrency).map(([cur, total]) => (
-              React.createElement('div', { key: cur, style: { ...styles.summaryCard, borderColor: '#ff6b4a44' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1468}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1468}}, "Итого, " , cur), React.createElement('div', { style: { ...styles.summaryValue, color: '#ff6b4a' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1468}}, total.toFixed(2)))
+              React.createElement('div', { key: cur, style: { ...styles.summaryCard, borderColor: '#ff6b4a44' },}, React.createElement('div', { style: styles.summaryLabel,}, "Итого, " , cur), React.createElement('div', { style: { ...styles.summaryValue, color: '#ff6b4a' },}, total.toFixed(2)))
             ))
           )
         )
       )
 
       /* Supplier selector */
-      , React.createElement('div', { style: styles.ggPanel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1475}}
-        , React.createElement('div', { style: { fontSize: 12.5, color: '#d1d5db', fontWeight: 600, marginBottom: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1476}}, "Поставщик")
-        , React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1477}}
-          , React.createElement('div', { style: { position: 'relative', flex: 1, minWidth: 180 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1478}}
+      , React.createElement('div', { style: styles.ggPanel,}
+        , React.createElement('div', { style: { fontSize: 12.5, color: '#d1d5db', fontWeight: 600, marginBottom: 10 },}, "Поставщик")
+        , React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' },}
+          , React.createElement('div', { style: { position: 'relative', flex: 1, minWidth: 180 },}
             , React.createElement('input', {
               value: supplierSearch,
               onChange: e => { setSupplierSearch(e.target.value); setShowSupplierList(true); },
               onFocus: () => setShowSupplierList(true),
               placeholder: selectedSupplier || 'Поиск или добавить нового…',
-              style: { ...styles.inputSmall, width: '100%', fontSize: 13 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1479}}
+              style: { ...styles.inputSmall, width: '100%', fontSize: 13 },}
             )
             , showSupplierList && (supplierSearch || suppliers.length > 0) && (
-              React.createElement('div', { style: { position: 'absolute', top: '100%', left: 0, right: 0, background: '#1a1a22', border: '1px solid #2d2d35', borderRadius: 8, zIndex: 50, maxHeight: 180, overflowY: 'auto', marginTop: 4 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1487}}
+              React.createElement('div', { style: { position: 'absolute', top: '100%', left: 0, right: 0, background: '#1a1a22', border: '1px solid #2d2d35', borderRadius: 8, zIndex: 50, maxHeight: 180, overflowY: 'auto', marginTop: 4 },}
                 , filteredSuppliers.map(s => (
                   React.createElement('div', { key: s, style: { display: 'flex', alignItems: 'center', padding: '8px 12px', cursor: 'pointer', background: selectedSupplier === s ? '#2d2050' : 'transparent', borderBottom: '1px solid #232329' },
-                    onClick: () => { setSelectedSupplier(s); setSupplierSearch(''); setShowSupplierList(false); }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1489}}
-                    , React.createElement('span', { style: { flex: 1, fontSize: 13, color: selectedSupplier === s ? '#a78bfa' : '#e5e7eb' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1491}}, s)
-                    , React.createElement('button', { onClick: e => { e.stopPropagation(); removeSupplier(s); }, style: { background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', padding: '0 4px', fontSize: 14 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1492}}, "×")
+                    onClick: () => { setSelectedSupplier(s); setSupplierSearch(''); setShowSupplierList(false); },}
+                    , React.createElement('span', { style: { flex: 1, fontSize: 13, color: selectedSupplier === s ? '#a78bfa' : '#e5e7eb' },}, s)
+                    , React.createElement('button', { onClick: e => { e.stopPropagation(); removeSupplier(s); }, style: { background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', padding: '0 4px', fontSize: 14 },}, "×")
                   )
                 ))
                 , supplierSearch && !suppliers.includes(supplierSearch.trim()) && (
                   React.createElement('div', { style: { padding: '8px 12px', cursor: 'pointer', color: '#a78bfa', fontSize: 13, borderTop: filteredSuppliers.length ? '1px solid #2d2d35' : 'none' },
-                    onClick: handleAddSupplier, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1496}}, "+ Добавить «"
+                    onClick: handleAddSupplier,}, "+ Добавить «"
                       , supplierSearch.trim(), "»"
                   )
                 )
@@ -1620,26 +1621,26 @@ function ReviewView({ parseResult, updateNewGameField, updateMatchedField, confi
             )
           )
           , selectedSupplier && (
-            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 6, background: '#2d2050', border: '1px solid #a78bfa55', borderRadius: 8, padding: '6px 12px' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1505}}
-              , React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1506}}, selectedSupplier)
-              , React.createElement('button', { onClick: () => setSelectedSupplier(''), style: { background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', fontSize: 16, lineHeight: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1507}}, "×")
+            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 6, background: '#2d2050', border: '1px solid #a78bfa55', borderRadius: 8, padding: '6px 12px' },}
+              , React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 },}, selectedSupplier)
+              , React.createElement('button', { onClick: () => setSelectedSupplier(''), style: { background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', fontSize: 16, lineHeight: 1 },}, "×")
             )
           )
         )
-        , !selectedSupplier && React.createElement('div', { style: { fontSize: 11, color: '#6b7280', marginTop: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1511}}, "Нік постачальника буде додано в кінець тексту з ключами"        )
+        , !selectedSupplier && React.createElement('div', { style: { fontSize: 11, color: '#6b7280', marginTop: 8 },}, "Нік постачальника буде додано в кінець тексту з ключами"        )
       )
 
-      , React.createElement('div', { style: { display: 'flex', gap: 10, marginBottom: 26 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1514}}
-        , React.createElement('button', { onClick: confirmImport, style: styles.btnPrimaryLg, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1515}}, React.createElement(Check, { size: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1515}} ), " Сохранить цены в базу"    )
-        , React.createElement('button', { onClick: cancelReview, style: styles.btnGhost, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1516}}, "Отмена")
+      , React.createElement('div', { style: { display: 'flex', gap: 10, marginBottom: 26 },}
+        , React.createElement('button', { onClick: confirmImport, style: styles.btnPrimaryLg,}, React.createElement(Check, { size: 16,} ), " Сохранить цены в базу"    )
+        , React.createElement('button', { onClick: cancelReview, style: styles.btnGhost,}, "Отмена")
       )
 
-      , React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1519}}
-        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1520}}
-          , React.createElement('h3', { style: { ...styles.h3, margin: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1521}}, "Сгруппированный список ключей"  )
-          , React.createElement('button', { onClick: copyGroupedText, style: styles.btnGhostIcon, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1522}}, React.createElement(Copy, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1522}} ), " Скопировать всё"  )
+      , React.createElement('div', { style: styles.section,}
+        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },}
+          , React.createElement('h3', { style: { ...styles.h3, margin: 0 },}, "Сгруппированный список ключей"  )
+          , React.createElement('button', { onClick: copyGroupedText, style: styles.btnGhostIcon,}, React.createElement(Copy, { size: 13,} ), " Скопировать всё"  )
         )
-        , React.createElement('textarea', { readOnly: true, value: groupedText, style: { ...styles.textarea, fontSize: 12 }, rows: 14, onClick: e => e.target.select(), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1524}} )
+        , React.createElement('textarea', { readOnly: true, value: groupedText, style: { ...styles.textarea, fontSize: 12 }, rows: 14, onClick: e => e.target.select(),} )
       )
     )
   );
@@ -1701,165 +1702,165 @@ function DbView({ games, search, setSearch, updateGamePrice, deleteGame, allCoun
   }
 
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1586}}
-      , React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1587}}
-        , React.createElement('div', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 1588}}
-          , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1589}}, "База цен" )
-          , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1590}}, allCount, " игр. Цена сохраняется один раз — при повторных поставках просто подставляется."           )
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 },}
+        , React.createElement('div', null
+          , React.createElement('h1', { style: styles.h1,}, "База цен" )
+          , React.createElement('p', { style: styles.subtitle,}, allCount, " игр. Цена сохраняется один раз — при повторных поставках просто подставляется."           )
         )
-        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1592}}
-          , React.createElement('button', { onClick: exportDB, style: styles.btnGhostIcon, title: "Сохранить игры и поставщиков в один JSON-файл"      , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1593}}
-            , React.createElement(Download, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1594}} ), " Экспорт всего"
+        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' },}
+          , React.createElement('button', { onClick: exportDB, style: styles.btnGhostIcon, title: "Сохранить игры и поставщиков в один JSON-файл"      ,}
+            , React.createElement(Download, { size: 13,} ), " Экспорт всего"
           )
-          , React.createElement('button', { onClick: () => fileInputRef.current && fileInputRef.current.click(), style: styles.btnGhostIcon, title: "Загрузить игры и поставщиков из JSON-файла"     , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1596}}
-            , React.createElement(Upload, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1597}} ), " Импорт всего"
+          , React.createElement('button', { onClick: () => fileInputRef.current && fileInputRef.current.click(), style: styles.btnGhostIcon, title: "Загрузить игры и поставщиков из JSON-файла"     ,}
+            , React.createElement(Upload, { size: 13,} ), " Импорт всего"
           )
-          , React.createElement('button', { onClick: mergeDuplicates, style: styles.btnGhostIcon, title: "Найти и объединить повторяющиеся названия"    , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1599}}
-            , React.createElement(Wand2, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1600}} ), " Объединить дубли"
+          , React.createElement('button', { onClick: mergeDuplicates, style: styles.btnGhostIcon, title: "Найти и объединить повторяющиеся названия"    ,}
+            , React.createElement(Wand2, { size: 13,} ), " Объединить дубли"
           )
-          , React.createElement('input', { ref: fileInputRef, type: "file", accept: "application/json,.json", onChange: handleFilePick, style: { display: 'none' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1602}} )
+          , React.createElement('input', { ref: fileInputRef, type: "file", accept: "application/json,.json", onChange: handleFilePick, style: { display: 'none' },} )
         )
       )
 
-      , React.createElement('div', { style: styles.ggPanel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1606}}
-        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1607}}
-          , React.createElement('span', { style: { fontSize: 12.5, color: '#d1d5db', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1608}}
-            , React.createElement(RefreshCw, { size: 13, color: "#a78bfa", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1609}} ), " Цены с gg.deals (кейшоп, USD)"
+      , React.createElement('div', { style: styles.ggPanel,}
+        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' },}
+          , React.createElement('span', { style: { fontSize: 12.5, color: '#d1d5db', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 },}
+            , React.createElement(RefreshCw, { size: 13, color: "#a78bfa",} ), " Цены с gg.deals (кейшоп, USD)"
           )
-          , React.createElement('span', { style: { fontSize: 11.5, color: selected.size ? '#a78bfa' : '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1611}}
+          , React.createElement('span', { style: { fontSize: 11.5, color: selected.size ? '#a78bfa' : '#6b7280' },}
             , selected.size ? `выбрано: ${selected.size}` : 'отметь игры галочками'
           )
-          , React.createElement('span', { style: { flex: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1614}} )
-          , React.createElement('button', { onClick: showSelectedNames, disabled: selected.size === 0, style: { ...styles.btnGhostIcon, opacity: selected.size ? 1 : 0.45 }, title: "Показать названия выбранных игр для отправки Клоду"      , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1615}}
-            , React.createElement(Copy, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1616}} ), " Цены на выбранные"
+          , React.createElement('span', { style: { flex: 1 },} )
+          , React.createElement('button', { onClick: showSelectedNames, disabled: selected.size === 0, style: { ...styles.btnGhostIcon, opacity: selected.size ? 1 : 0.45 }, title: "Показать названия выбранных игр для отправки Клоду"      ,}
+            , React.createElement(Copy, { size: 13,} ), " Цены на выбранные"
           )
           , fetchGGForSelected && (
-            React.createElement('button', { onClick: () => fetchGGForSelected(Array.from(selected)), disabled: selected.size === 0 || ggUpdating, style: { ...styles.btnGhostIcon, opacity: (selected.size && !ggUpdating) ? 1 : 0.45 }, title: "Попробовать достать цены автоматически через CORS-прокси (может не сработать)"        , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1619}}
-              , React.createElement(RefreshCw, { size: 13, style: ggUpdating ? { animation: 'spin 1s linear infinite' } : {}, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1620}} ), " " , ggUpdating && ggProgress ? `${ggProgress.done}/${ggProgress.total}` : 'Авто (прокси)'
+            React.createElement('button', { onClick: () => fetchGGForSelected(Array.from(selected)), disabled: selected.size === 0 || ggUpdating, style: { ...styles.btnGhostIcon, opacity: (selected.size && !ggUpdating) ? 1 : 0.45 }, title: "Попробовать достать цены автоматически через CORS-прокси (может не сработать)"        ,}
+              , React.createElement(RefreshCw, { size: 13, style: ggUpdating ? { animation: 'spin 1s linear infinite' } : {},} ), " " , ggUpdating && ggProgress ? `${ggProgress.done}/${ggProgress.total}` : 'Авто (прокси)'
             )
           )
-          , React.createElement('button', { onClick: () => setShowPaste(s => !s), style: styles.btnPrimary, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1623}}
-            , React.createElement(Plus, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1624}} ), " Вставить цены"
+          , React.createElement('button', { onClick: () => setShowPaste(s => !s), style: styles.btnPrimary,}
+            , React.createElement(Plus, { size: 14,} ), " Вставить цены"
           )
         )
-        , React.createElement('div', { style: { fontSize: 11, color: '#6b7280', marginTop: 8, lineHeight: 1.5 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1627}}, "Отметь нужные игры галочками → «Цены на выбранные» покажет их названия → скопируй и пришли Клоду → вставь его ответ через «Вставить цены». Кнопка «Авто (прокси)» пробует достать цены сама, но может не сработать."
+        , React.createElement('div', { style: { fontSize: 11, color: '#6b7280', marginTop: 8, lineHeight: 1.5 },}, "Отметь нужные игры галочками → «Цены на выбранные» покажет их названия → скопируй и пришли Клоду → вставь его ответ через «Вставить цены». Кнопка «Авто (прокси)» пробует достать цены сама, но может не сработать."
 
         )
         , fetchGGForSelected && (
-          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1631}}
-            , React.createElement('span', { style: { fontSize: 11, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1632}}, "API-ключ gg.deals (для «Авто»):"   )
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 },}
+            , React.createElement('span', { style: { fontSize: 11, color: '#6b7280' },}, "API-ключ gg.deals (для «Авто»):"   )
             , React.createElement('input', {
               type: "password",
               value: ggKey,
               onChange: e => saveGGKeyHandler(e.target.value),
               placeholder: "нужен только для авто-режима"   ,
-              style: { ...styles.inputSmall, width: 180 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1633}}
+              style: { ...styles.inputSmall, width: 180 },}
             )
           )
         )
 
         , showNames && (
-          React.createElement('div', { style: { marginTop: 12 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1644}}
-            , React.createElement('div', { style: { fontSize: 11, color: '#a78bfa', marginBottom: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1645}}, "Названия выбранных игр — выдели (Ctrl+A) и скопируй (Ctrl+C):"        )
+          React.createElement('div', { style: { marginTop: 12 },}
+            , React.createElement('div', { style: { fontSize: 11, color: '#a78bfa', marginBottom: 6 },}, "Названия выбранных игр — выдели (Ctrl+A) и скопируй (Ctrl+C):"        )
             , React.createElement('textarea', {
               ref: namesRef,
               readOnly: true,
               value: selectedNamesText,
               onClick: e => e.target.select(),
               style: { ...styles.textarea, fontSize: 12 },
-              rows: Math.min(14, Math.max(3, selectedNames.length)), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1646}}
+              rows: Math.min(14, Math.max(3, selectedNames.length)),}
             )
-            , React.createElement('button', { onClick: () => setShowNames(false), style: { ...styles.btnGhost, marginTop: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1654}}, "Скрыть")
+            , React.createElement('button', { onClick: () => setShowNames(false), style: { ...styles.btnGhost, marginTop: 8 },}, "Скрыть")
           )
         )
 
         , showPaste && (
-          React.createElement('div', { style: { marginTop: 12 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1659}}
+          React.createElement('div', { style: { marginTop: 12 },}
             , React.createElement('textarea', {
               value: pasteText,
               onChange: e => setPasteText(e.target.value),
               placeholder: `Вставь ответ Клода в формате:\nDevil May Cry 5 = 6.78\nDmC: Devil May Cry = 4.05`,
               style: { ...styles.textarea, fontSize: 12 },
-              rows: 8, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1660}}
+              rows: 8,}
             )
-            , React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1667}}
-              , React.createElement('button', { onClick: handleApply, disabled: !pasteText.trim(), style: { ...styles.btnPrimary, opacity: pasteText.trim() ? 1 : 0.4 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1668}}
-                , React.createElement(Check, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1669}} ), " Применить к базе"
+            , React.createElement('div', { style: { display: 'flex', gap: 8, marginTop: 8 },}
+              , React.createElement('button', { onClick: handleApply, disabled: !pasteText.trim(), style: { ...styles.btnPrimary, opacity: pasteText.trim() ? 1 : 0.4 },}
+                , React.createElement(Check, { size: 14,} ), " Применить к базе"
               )
-              , React.createElement('button', { onClick: () => { setShowPaste(false); setPasteText(''); }, style: styles.btnGhost, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1671}}, "Отмена")
+              , React.createElement('button', { onClick: () => { setShowPaste(false); setPasteText(''); }, style: styles.btnGhost,}, "Отмена")
             )
           )
         )
       )
 
-      , React.createElement('div', { style: styles.searchBar, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1677}}
-        , React.createElement(Search, { size: 15, color: "#6b7280", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1678}} )
-        , React.createElement('input', { value: search, onChange: e => setSearch(e.target.value), placeholder: "Поиск по названию…"  , style: styles.searchInput, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1679}} )
+      , React.createElement('div', { style: styles.searchBar,}
+        , React.createElement(Search, { size: 15, color: "#6b7280",} )
+        , React.createElement('input', { value: search, onChange: e => setSearch(e.target.value), placeholder: "Поиск по названию…"  , style: styles.searchInput,} )
       )
 
-      , games.length === 0 && React.createElement('div', { style: styles.emptyState, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1682}}, search ? 'Ничего не найдено' : 'База пока пуста — сделай первый импорт')
+      , games.length === 0 && React.createElement('div', { style: styles.emptyState,}, search ? 'Ничего не найдено' : 'База пока пуста — сделай первый импорт')
 
       , games.length > 0 && (
-        React.createElement('div', { style: styles.dbHeaderRow, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1685}}
-          , React.createElement('span', { style: { width: 26, display: 'flex', justifyContent: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1686}}
-            , React.createElement('input', { type: "checkbox", checked: allVisibleSelected, onChange: toggleSelectAllVisible, style: { cursor: 'pointer', accentColor: '#a78bfa' }, title: "Выбрать все видимые"  , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1687}} )
+        React.createElement('div', { style: styles.dbHeaderRow,}
+          , React.createElement('span', { style: { width: 26, display: 'flex', justifyContent: 'center' },}
+            , React.createElement('input', { type: "checkbox", checked: allVisibleSelected, onChange: toggleSelectAllVisible, style: { cursor: 'pointer', accentColor: '#a78bfa' }, title: "Выбрать все видимые"  ,} )
           )
-          , React.createElement('span', { style: { flex: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1689}}, "Игра")
-          , React.createElement('span', { style: { width: 130, textAlign: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1690}}, "Моя цена" )
-          , React.createElement('span', { style: { width: 150, textAlign: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1691}}, "gg.deals (кейшоп)" )
-          , React.createElement('span', { style: { width: 110, textAlign: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1692}}, "GG Deals × 0,7"   )
-          , React.createElement('span', { style: { width: 60 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1693}} )
+          , React.createElement('span', { style: { flex: 1 },}, "Игра")
+          , React.createElement('span', { style: { width: 130, textAlign: 'center' },}, "Моя цена" )
+          , React.createElement('span', { style: { width: 150, textAlign: 'center' },}, "gg.deals (кейшоп)" )
+          , React.createElement('span', { style: { width: 110, textAlign: 'center' },}, "GG Deals × 0,7"   )
+          , React.createElement('span', { style: { width: 60 },} )
         )
       )
 
-      , React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1697}}
+      , React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 6 },}
         , games.map(g => {
           const x07 = g.ggKeyshop ? (Math.floor(parseFloat(g.ggKeyshop) * 0.7 * 10) / 10).toFixed(1) : null;
           return mobile ? (
             // ---- MOBILE CARD ----
-            React.createElement('div', { key: g.id, style: { ...styles.priceRow, ...(selected.has(g.id) ? { borderColor: '#a78bfa55', background: '#1a1530' } : {}), flexDirection: 'column', gap: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1702}}
-              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1703}}
-                , React.createElement('input', { type: "checkbox", checked: selected.has(g.id), onChange: () => toggleSelect(g.id), style: { cursor: 'pointer', accentColor: '#a78bfa', width: 18, height: 18, flexShrink: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1704}} )
-                , React.createElement('div', { style: { flex: 1, minWidth: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1705}}
-                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 15, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1706}}, g.name)
+            React.createElement('div', { key: g.id, style: { ...styles.priceRow, ...(selected.has(g.id) ? { borderColor: '#a78bfa55', background: '#1a1530' } : {}), flexDirection: 'column', gap: 10 },}
+              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8 },}
+                , React.createElement('input', { type: "checkbox", checked: selected.has(g.id), onChange: () => toggleSelect(g.id), style: { cursor: 'pointer', accentColor: '#a78bfa', width: 18, height: 18, flexShrink: 0 },} )
+                , React.createElement('div', { style: { flex: 1, minWidth: 0 },}
+                  , React.createElement('div', { style: { fontWeight: 600, fontSize: 15, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },}, g.name)
                 )
-                , React.createElement('button', { onClick: () => deleteGame(g.id), style: { ...styles.iconBtnDanger, width: 36, height: 36, flexShrink: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1708}}, React.createElement(Trash2, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1708}} ))
+                , React.createElement('button', { onClick: () => deleteGame(g.id), style: { ...styles.iconBtnDanger, width: 36, height: 36, flexShrink: 0 },}, React.createElement(Trash2, { size: 15,} ))
               )
-              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, paddingLeft: 26 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1710}}
-                , React.createElement('input', { type: "number", step: "0.01", value: g.costPrice, onChange: e => updateGamePrice(g.id, 'costPrice', parseFloat(e.target.value) || 0), style: { ...styles.inputSmall, width: 80 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1711}} )
-                , React.createElement('select', { value: g.currency, onChange: e => updateGamePrice(g.id, 'currency', e.target.value), style: styles.selectSmall, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1712}}, CURRENCIES.map(c => React.createElement('option', { key: c, value: c, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1712}}, c)))
-                , g.ggKeyshop && React.createElement('span', { style: { fontSize: 13, color: '#4ade80', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1713}}, g.ggKeyshop)
-                , x07 && React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1714}}, x07)
-                , g.ggKeyshop && React.createElement('button', { onClick: () => syncGGToCost(g.id), style: { ...styles.iconBtn, width: 36, height: 36 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1715}}, React.createElement(ArrowLeftRight, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1715}} ))
+              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, paddingLeft: 26 },}
+                , React.createElement('input', { type: "number", step: "0.01", value: g.costPrice, onChange: e => updateGamePrice(g.id, 'costPrice', parseFloat(e.target.value) || 0), style: { ...styles.inputSmall, width: 80 },} )
+                , React.createElement('select', { value: g.currency, onChange: e => updateGamePrice(g.id, 'currency', e.target.value), style: styles.selectSmall,}, CURRENCIES.map(c => React.createElement('option', { key: c, value: c,}, c)))
+                , g.ggKeyshop && React.createElement('span', { style: { fontSize: 13, color: '#4ade80', fontWeight: 600 },}, g.ggKeyshop)
+                , x07 && React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 },}, x07)
+                , g.ggKeyshop && React.createElement('button', { onClick: () => syncGGToCost(g.id), style: { ...styles.iconBtn, width: 36, height: 36 },}, React.createElement(ArrowLeftRight, { size: 15,} ))
               )
             )
           ) : (
             // ---- DESKTOP ROW ----
-            React.createElement('div', { key: g.id, style: { ...styles.priceRow, ...(selected.has(g.id) ? { borderColor: '#a78bfa55', background: '#1a1530' } : {}), display: 'flex', alignItems: 'center', gap: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1720}}
-              , React.createElement('div', { style: { width: 26, flexShrink: 0, display: 'flex', justifyContent: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1721}}
-                , React.createElement('input', { type: "checkbox", checked: selected.has(g.id), onChange: () => toggleSelect(g.id), style: { cursor: 'pointer', accentColor: '#a78bfa' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1722}} )
+            React.createElement('div', { key: g.id, style: { ...styles.priceRow, ...(selected.has(g.id) ? { borderColor: '#a78bfa55', background: '#1a1530' } : {}), display: 'flex', alignItems: 'center', gap: 0 },}
+              , React.createElement('div', { style: { width: 26, flexShrink: 0, display: 'flex', justifyContent: 'center' },}
+                , React.createElement('input', { type: "checkbox", checked: selected.has(g.id), onChange: () => toggleSelect(g.id), style: { cursor: 'pointer', accentColor: '#a78bfa' },} )
               )
-              , React.createElement('div', { style: { flex: 1, minWidth: 0, paddingRight: 12 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1724}}
-                , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1725}}, g.name)
-                , g.ggUpdatedAt && React.createElement('div', { style: { fontSize: 10.5, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1726}}, "обновлено " , new Date(g.ggUpdatedAt).toLocaleDateString())
+              , React.createElement('div', { style: { flex: 1, minWidth: 0, paddingRight: 12 },}
+                , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },}, g.name)
+                , g.ggUpdatedAt && React.createElement('div', { style: { fontSize: 10.5, color: '#6b7280' },}, "обновлено " , new Date(g.ggUpdatedAt).toLocaleDateString())
               )
-              , React.createElement('div', { style: { width: 130, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, flexShrink: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1728}}
-                , React.createElement('input', { type: "number", step: "0.01", value: g.costPrice, onChange: e => updateGamePrice(g.id, 'costPrice', parseFloat(e.target.value) || 0), style: { ...styles.inputSmall, width: 64 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1729}} )
-                , React.createElement('select', { value: g.currency, onChange: e => updateGamePrice(g.id, 'currency', e.target.value), style: styles.selectSmall, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1730}}, CURRENCIES.map(c => React.createElement('option', { key: c, value: c, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1730}}, c)))
+              , React.createElement('div', { style: { width: 130, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, flexShrink: 0 },}
+                , React.createElement('input', { type: "number", step: "0.01", value: g.costPrice, onChange: e => updateGamePrice(g.id, 'costPrice', parseFloat(e.target.value) || 0), style: { ...styles.inputSmall, width: 64 },} )
+                , React.createElement('select', { value: g.currency, onChange: e => updateGamePrice(g.id, 'currency', e.target.value), style: styles.selectSmall,}, CURRENCIES.map(c => React.createElement('option', { key: c, value: c,}, c)))
               )
-              , React.createElement('div', { style: { width: 150, flexShrink: 0, textAlign: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1732}}
+              , React.createElement('div', { style: { width: 150, flexShrink: 0, textAlign: 'center' },}
                 , g.ggKeyshop
-                  ? React.createElement('span', { style: { fontSize: 13, color: '#4ade80', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1734}}, g.ggKeyshop, " " , g.ggCurrency || 'USD')
-                  : React.createElement('span', { style: { fontSize: 11.5, color: '#4b5563' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1735}}, "—")
+                  ? React.createElement('span', { style: { fontSize: 13, color: '#4ade80', fontWeight: 600 },}, g.ggKeyshop, " " , g.ggCurrency || 'USD')
+                  : React.createElement('span', { style: { fontSize: 11.5, color: '#4b5563' },}, "—")
               )
-              , React.createElement('div', { style: { width: 110, flexShrink: 0, textAlign: 'center' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1737}}
+              , React.createElement('div', { style: { width: 110, flexShrink: 0, textAlign: 'center' },}
                 , x07
-                  ? React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1739}}, x07)
-                  : React.createElement('span', { style: { fontSize: 11.5, color: '#4b5563' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1740}}, "—")
+                  ? React.createElement('span', { style: { fontSize: 13, color: '#a78bfa', fontWeight: 600 },}, x07)
+                  : React.createElement('span', { style: { fontSize: 11.5, color: '#4b5563' },}, "—")
               )
-              , React.createElement('div', { style: { width: 60, flexShrink: 0, display: 'flex', gap: 4, justifyContent: 'flex-end' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1742}}
-                , React.createElement('button', { onClick: () => syncGGToCost(g.id), disabled: !g.ggKeyshop, style: { ...styles.iconBtn, opacity: g.ggKeyshop ? 1 : 0.35 }, title: "Синхронизировать с gg.deals"  , __self: this, __source: {fileName: _jsxFileName, lineNumber: 1743}}, React.createElement(ArrowLeftRight, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1743}} ))
-                , React.createElement('button', { onClick: () => deleteGame(g.id), style: styles.iconBtnDanger, title: "Удалить", __self: this, __source: {fileName: _jsxFileName, lineNumber: 1744}}, React.createElement(Trash2, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1744}} ))
+              , React.createElement('div', { style: { width: 60, flexShrink: 0, display: 'flex', gap: 4, justifyContent: 'flex-end' },}
+                , React.createElement('button', { onClick: () => syncGGToCost(g.id), disabled: !g.ggKeyshop, style: { ...styles.iconBtn, opacity: g.ggKeyshop ? 1 : 0.35 }, title: "Синхронизировать с gg.deals"  ,}, React.createElement(ArrowLeftRight, { size: 13,} ))
+                , React.createElement('button', { onClick: () => deleteGame(g.id), style: styles.iconBtnDanger, title: "Удалить",}, React.createElement(Trash2, { size: 13,} ))
               )
             )
           );
@@ -1874,38 +1875,38 @@ function DbView({ games, search, setSearch, updateGamePrice, deleteGame, allCoun
 function GiftIntakeView({ giftRawText, setGiftRawText, handleGiftParse, giftBrand, setGiftBrand, GIFT_BRANDS, giftCurrency, setGiftCurrency, GIFT_CURRENCIES }) {
   const mobile = useMobile();
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1759}}
-      , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1760}}, "Новая поставка гифт-карт"  )
-      , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1761}}, "Выбери бренд и валюту, затем вставь текст: номинал (число) на строке, ключи под ним."             )
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('h1', { style: styles.h1,}, "Новая поставка гифт-карт"  )
+      , React.createElement('p', { style: styles.subtitle,}, "Выбери бренд и валюту, затем вставь текст: номинал (число) на строке, ключи под ним."             )
 
-      , React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1763}}
-        , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1764}}, "Бренд")
-        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1765}}
+      , React.createElement('div', { style: styles.card,}
+        , React.createElement('label', { style: styles.label,}, "Бренд")
+        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap' },}
           , GIFT_BRANDS.map(b => (
-            React.createElement('button', { key: b, onClick: () => setGiftBrand(b), style: { ...styles.chip, ...(giftBrand === b ? styles.chipActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1767}}, b)
+            React.createElement('button', { key: b, onClick: () => setGiftBrand(b), style: { ...styles.chip, ...(giftBrand === b ? styles.chipActive : {}) },}, b)
           ))
         )
       )
 
-      , React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1772}}
-        , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1773}}, "Валюта номинала" )
-        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1774}}
+      , React.createElement('div', { style: styles.card,}
+        , React.createElement('label', { style: styles.label,}, "Валюта номинала" )
+        , React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap' },}
           , GIFT_CURRENCIES.map(c => (
-            React.createElement('button', { key: c, onClick: () => setGiftCurrency(c), style: { ...styles.chip, ...(giftCurrency === c ? styles.chipActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1776}}, c)
+            React.createElement('button', { key: c, onClick: () => setGiftCurrency(c), style: { ...styles.chip, ...(giftCurrency === c ? styles.chipActive : {}) },}, c)
           ))
         )
       )
 
-      , React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1781}}
-        , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1782}}, "Текст от поставщика"  )
+      , React.createElement('div', { style: styles.card,}
+        , React.createElement('label', { style: styles.label,}, "Текст от поставщика"  )
         , React.createElement('textarea', {
           value: giftRawText, onChange: e => setGiftRawText(e.target.value),
           placeholder: `10\nключ1\nключ2\nключ3\n\n20\nключ1\nключ2`,
-          style: styles.textarea, rows: 16, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1783}}
+          style: styles.textarea, rows: 16,}
         )
-        , React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1788}}
-          , React.createElement('span', { style: { fontSize: 12, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1789}}, giftRawText.split('\n').filter(l => l.trim()).length, " строк" )
-          , React.createElement('button', { onClick: handleGiftParse, disabled: !giftRawText.trim(), style: { ...styles.btnPrimary, opacity: giftRawText.trim() ? 1 : 0.4 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1790}}, "Разобрать " , React.createElement(ChevronRight, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1790}} ))
+        , React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 },}
+          , React.createElement('span', { style: { fontSize: 12, color: '#6b7280' },}, giftRawText.split('\n').filter(l => l.trim()).length, " строк" )
+          , React.createElement('button', { onClick: handleGiftParse, disabled: !giftRawText.trim(), style: { ...styles.btnPrimary, opacity: giftRawText.trim() ? 1 : 0.4 },}, "Разобрать " , React.createElement(ChevronRight, { size: 15,} ))
         )
       )
     )
@@ -1967,50 +1968,50 @@ function GiftReviewView({ giftParseResult, giftPercent, setGiftPercent, giftBran
   const activePayout = priceMode === 'manual' ? manualPayout : giftImportPayout;
 
   return (
-    React.createElement('div', { style: styles.viewWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1852}}
-      , React.createElement('button', { onClick: cancelGiftReview, style: styles.backBtn, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1853}}, React.createElement(ArrowLeft, { size: 14, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1853}} ), " Назад" )
-      , React.createElement('h1', { style: styles.h1, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1854}}, giftBrand, " " , giftCurrency, " — расчёт"  )
-      , React.createElement('p', { style: styles.subtitle, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1855}}, "Найдено "
+    React.createElement('div', { style: styles.viewWrap,}
+      , React.createElement('button', { onClick: cancelGiftReview, style: styles.backBtn,}, React.createElement(ArrowLeft, { size: 14,} ), " Назад" )
+      , React.createElement('h1', { style: styles.h1,}, giftBrand, " " , giftCurrency, " — расчёт"  )
+      , React.createElement('p', { style: styles.subtitle,}, "Найдено "
          , groups.length, " номиналов, "  , totalKeys, " ключей"
-        , trash.length > 0 && React.createElement('span', { style: { color: '#fb923c' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1857}}, " · "  , trash.length, " строк не распознано"   )
+        , trash.length > 0 && React.createElement('span', { style: { color: '#fb923c' },}, " · "  , trash.length, " строк не распознано"   )
       )
 
       /* Mode toggle */
-      , React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 16 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1861}}
+      , React.createElement('div', { style: { display: 'flex', gap: 8, marginBottom: 16 },}
         , React.createElement('button', {
           onClick: () => setPriceMode('percent'),
-          style: { ...styles.chip, ...(priceMode === 'percent' ? styles.chipActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1862}}
+          style: { ...styles.chip, ...(priceMode === 'percent' ? styles.chipActive : {}) },}
 , "% от номинала"  )
         , React.createElement('button', {
           onClick: () => setPriceMode('manual'),
-          style: { ...styles.chip, ...(priceMode === 'manual' ? styles.chipActive : {}) }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1866}}
+          style: { ...styles.chip, ...(priceMode === 'manual' ? styles.chipActive : {}) },}
 , "Ввести цену вручную"  )
       )
 
       /* Percent mode inputs */
       , priceMode === 'percent' && (
-        React.createElement('div', { style: { display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1874}}
-          , React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1875}}
-            , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1876}}, "% от номинала"  )
+        React.createElement('div', { style: { display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' },}
+          , React.createElement('div', { style: styles.card,}
+            , React.createElement('label', { style: styles.label,}, "% от номинала"  )
             , React.createElement('input', {
               type: "number", step: "0.1", placeholder: "напр. 80" ,
               value: giftPercent,
               onChange: e => setGiftPercent(e.target.value),
               style: { ...styles.inputSmall, width: 100, fontSize: 14 },
-              autoFocus: true, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1877}}
+              autoFocus: true,}
             )
           )
           , giftCurrency !== 'USD' && (
-            React.createElement('div', { style: styles.card, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1886}}
-              , React.createElement('label', { style: styles.label, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1887}}, "Курс 1 "  , giftCurrency, " → USD"  )
-              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1888}}
+            React.createElement('div', { style: styles.card,}
+              , React.createElement('label', { style: styles.label,}, "Курс 1 "  , giftCurrency, " → USD"  )
+              , React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 6 },}
                 , React.createElement('input', {
                   type: "number", step: "0.0001", placeholder: "курс",
                   value: giftRate,
                   onChange: e => setGiftRate(e.target.value),
-                  style: { ...styles.inputSmall, width: 100, fontSize: 14 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1889}}
+                  style: { ...styles.inputSmall, width: 100, fontSize: 14 },}
                 )
-                , giftRateLoading && React.createElement('span', { style: { fontSize: 11, color: '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1895}}, "загрузка…")
+                , giftRateLoading && React.createElement('span', { style: { fontSize: 11, color: '#6b7280' },}, "загрузка…")
               )
             )
           )
@@ -2019,15 +2020,15 @@ function GiftReviewView({ giftParseResult, giftPercent, setGiftPercent, giftBran
 
       /* Positions list */
       , groups.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1904}}
-          , React.createElement('h3', { style: styles.h3, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1905}}, "Позиции (" , groups.length, ")")
-          , React.createElement('div', { style: styles.tableWrap, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1906}}
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: styles.h3,}, "Позиции (" , groups.length, ")")
+          , React.createElement('div', { style: styles.tableWrap,}
             , groups.map((g, idx) => {
               const cost = getDisplayCost(g, idx);
               return (
-                React.createElement('div', { key: idx, style: styles.matchedRow, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1910}}
-                  , React.createElement('div', { style: { flex: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1911}}
-                    , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1912}}, g.brand, " " , g.nominal, " " , g.currency)
+                React.createElement('div', { key: idx, style: styles.matchedRow,}
+                  , React.createElement('div', { style: { flex: 1 },}
+                    , React.createElement('div', { style: { fontWeight: 600, fontSize: 13.5 },}, g.brand, " " , g.nominal, " " , g.currency)
                   )
                   , priceMode === 'manual' ? (
                     React.createElement('input', {
@@ -2035,14 +2036,14 @@ function GiftReviewView({ giftParseResult, giftPercent, setGiftPercent, giftBran
                       placeholder: "цена USD" ,
                       value: manualPrices[idx],
                       onChange: e => setManualPrice(idx, e.target.value),
-                      style: { ...styles.inputSmall, width: 90, borderColor: manualPrices[idx] === '' ? '#ef4444' : '#374151' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1915}}
+                      style: { ...styles.inputSmall, width: 90, borderColor: manualPrices[idx] === '' ? '#ef4444' : '#374151' },}
                     )
                   ) : (
-                    React.createElement('div', { style: { fontSize: 12.5, color: cost !== null ? '#4ade80' : '#6b7280' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1923}}
+                    React.createElement('div', { style: { fontSize: 12.5, color: cost !== null ? '#4ade80' : '#6b7280' },}
                       , cost !== null ? `${cost.toFixed(2)} USD/шт` : 'впиши % и курс'
                     )
                   )
-                  , React.createElement('div', { style: styles.keyCountBadge, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1927}}, g.keys.length, " ключей" )
+                  , React.createElement('div', { style: styles.keyCountBadge,}, g.keys.length, " ключей" )
                 )
               );
             })
@@ -2051,45 +2052,45 @@ function GiftReviewView({ giftParseResult, giftPercent, setGiftPercent, giftBran
       )
 
       , trash.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1936}}
-          , React.createElement('h3', { style: { ...styles.h3, color: '#fb923c' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1937}}, React.createElement(X, { size: 15, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1937}} ), " Не распознано ("   , trash.length, ")")
-          , React.createElement('div', { style: styles.trashBox, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1938}}
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: { ...styles.h3, color: '#fb923c' },}, React.createElement(X, { size: 15,} ), " Не распознано ("   , trash.length, ")")
+          , React.createElement('div', { style: styles.trashBox,}
             , trash.slice(0, 30).map((t, i) => (
-              React.createElement('div', { key: i, style: styles.trashLine, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1940}}, React.createElement('span', { style: { color: '#9ca3af' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1940}}, t.raw), React.createElement('span', { style: { color: '#6b7280', fontSize: 11 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1940}}, " — "  , t.reason))
+              React.createElement('div', { key: i, style: styles.trashLine,}, React.createElement('span', { style: { color: '#9ca3af' },}, t.raw), React.createElement('span', { style: { color: '#6b7280', fontSize: 11 },}, " — "  , t.reason))
             ))
-            , trash.length > 30 && React.createElement('div', { style: { color: '#6b7280', fontSize: 12, marginTop: 6 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1942}}, "и ещё "  , trash.length - 30, "…")
+            , trash.length > 30 && React.createElement('div', { style: { color: '#6b7280', fontSize: 12, marginTop: 6 },}, "и ещё "  , trash.length - 30, "…")
           )
         )
       )
 
       , activePayout && activePayout.lines.length > 0 && (
-        React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1948}}
-          , React.createElement('h3', { style: styles.h3, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1949}}, "Сумма к оплате (USD)"   )
-          , React.createElement('div', { style: styles.summaryGrid, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1950}}
-            , React.createElement('div', { style: styles.summaryCard, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1951}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1951}}, "Позиций"), React.createElement('div', { style: styles.summaryValue, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1951}}, activePayout.lines.length))
-            , React.createElement('div', { style: styles.summaryCard, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1952}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1952}}, "Ключей"), React.createElement('div', { style: styles.summaryValue, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1952}}, activePayout.totalKeys))
-            , React.createElement('div', { style: { ...styles.summaryCard, borderColor: '#ff6b4a44' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1953}}, React.createElement('div', { style: styles.summaryLabel, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1953}}, "Итого, USD" ), React.createElement('div', { style: { ...styles.summaryValue, color: '#ff6b4a' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1953}}, activePayout.totalUSD.toFixed(2)))
+        React.createElement('div', { style: styles.section,}
+          , React.createElement('h3', { style: styles.h3,}, "Сумма к оплате (USD)"   )
+          , React.createElement('div', { style: styles.summaryGrid,}
+            , React.createElement('div', { style: styles.summaryCard,}, React.createElement('div', { style: styles.summaryLabel,}, "Позиций"), React.createElement('div', { style: styles.summaryValue,}, activePayout.lines.length))
+            , React.createElement('div', { style: styles.summaryCard,}, React.createElement('div', { style: styles.summaryLabel,}, "Ключей"), React.createElement('div', { style: styles.summaryValue,}, activePayout.totalKeys))
+            , React.createElement('div', { style: { ...styles.summaryCard, borderColor: '#ff6b4a44' },}, React.createElement('div', { style: styles.summaryLabel,}, "Итого, USD" ), React.createElement('div', { style: { ...styles.summaryValue, color: '#ff6b4a' },}, activePayout.totalUSD.toFixed(2)))
           )
-          , React.createElement('div', { style: styles.payoutTable, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1955}}
-            , React.createElement('div', { style: styles.payoutTableHeader, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1956}}, React.createElement('span', { style: { flex: 1 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1956}}, "Номинал"), React.createElement('span', { style: { width: 50, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1956}}, "Кол"), React.createElement('span', { style: { width: 90, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1956}}, "USD/шт"), React.createElement('span', { style: { width: 90, textAlign: 'right' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1956}}, "Сумма"))
+          , React.createElement('div', { style: styles.payoutTable,}
+            , React.createElement('div', { style: styles.payoutTableHeader,}, React.createElement('span', { style: { flex: 1 },}, "Номинал"), React.createElement('span', { style: { width: 50, textAlign: 'right' },}, "Кол"), React.createElement('span', { style: { width: 90, textAlign: 'right' },}, "USD/шт"), React.createElement('span', { style: { width: 90, textAlign: 'right' },}, "Сумма"))
             , activePayout.lines.map((l, i) => (
-              React.createElement('div', { key: i, style: styles.payoutTableRow, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1958}}
-                , React.createElement('span', { style: { flex: 1, fontSize: 13 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1959}}, l.name)
-                , React.createElement('span', { style: { width: 50, textAlign: 'right', fontSize: 13, color: '#9ca3af' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1960}}, l.qty)
-                , React.createElement('span', { style: { width: 90, textAlign: 'right', fontSize: 13, color: '#4ade80' }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1961}}, l.costPerKey.toFixed(2))
-                , React.createElement('span', { style: { width: 90, textAlign: 'right', fontSize: 13, fontWeight: 600 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1962}}, l.lineTotal.toFixed(2))
+              React.createElement('div', { key: i, style: styles.payoutTableRow,}
+                , React.createElement('span', { style: { flex: 1, fontSize: 13 },}, l.name)
+                , React.createElement('span', { style: { width: 50, textAlign: 'right', fontSize: 13, color: '#9ca3af' },}, l.qty)
+                , React.createElement('span', { style: { width: 90, textAlign: 'right', fontSize: 13, color: '#4ade80' },}, l.costPerKey.toFixed(2))
+                , React.createElement('span', { style: { width: 90, textAlign: 'right', fontSize: 13, fontWeight: 600 },}, l.lineTotal.toFixed(2))
               )
             ))
           )
         )
       )
 
-      , React.createElement('div', { style: styles.section, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1969}}
-        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1970}}
-          , React.createElement('h3', { style: { ...styles.h3, margin: 0 }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1971}}, "Сгруппированный список ключей"  )
-          , React.createElement('button', { onClick: () => { try { _optionalChain([navigator, 'access', _17 => _17.clipboard, 'optionalAccess', _18 => _18.writeText, 'call', _19 => _19(activeGroupedText)]); } catch (e10) {} }, style: styles.btnGhostIcon, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1972}}, React.createElement(Copy, { size: 13, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1972}} ), " Скопировать всё"  )
+      , React.createElement('div', { style: styles.section,}
+        , React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },}
+          , React.createElement('h3', { style: { ...styles.h3, margin: 0 },}, "Сгруппированный список ключей"  )
+          , React.createElement('button', { onClick: () => { try { _optionalChain([navigator, 'access', _17 => _17.clipboard, 'optionalAccess', _18 => _18.writeText, 'call', _19 => _19(activeGroupedText)]); } catch (e10) {} }, style: styles.btnGhostIcon,}, React.createElement(Copy, { size: 13,} ), " Скопировать всё"  )
         )
-        , React.createElement('textarea', { readOnly: true, value: activeGroupedText, style: { ...styles.textarea, fontSize: 12 }, rows: 14, onClick: e => e.target.select(), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1974}} )
+        , React.createElement('textarea', { readOnly: true, value: activeGroupedText, style: { ...styles.textarea, fontSize: 12 }, rows: 14, onClick: e => e.target.select(),} )
       )
     )
   );
